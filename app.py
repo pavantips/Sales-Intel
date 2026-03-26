@@ -88,9 +88,11 @@ if submitted:
 
     # Validate API key is present before calling agent
     from agent import _get_api_key
-    if not _get_api_key():
+    api_key = _get_api_key()
+    if not api_key:
         st.error("Anthropic API key not found. Add ANTHROPIC_API_KEY to your Streamlit secrets.")
         st.stop()
+    st.caption(f"🔑 Key loaded: `{api_key[:12]}...` (length: {len(api_key)})")
 
     status_placeholder = st.empty()
     with st.spinner(""):
