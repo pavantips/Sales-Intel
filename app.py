@@ -86,6 +86,12 @@ if submitted:
     result = None
     usage = None
 
+    # Validate API key is present before calling agent
+    from agent import _get_api_key
+    if not _get_api_key():
+        st.error("Anthropic API key not found. Add ANTHROPIC_API_KEY to your Streamlit secrets.")
+        st.stop()
+
     status_placeholder = st.empty()
     with st.spinner(""):
         status_placeholder.info("Researching company...")

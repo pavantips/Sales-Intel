@@ -8,11 +8,13 @@ load_dotenv()
 
 def _get_api_key():
     """Read API key from st.secrets (Streamlit Cloud) or .env (local)."""
+    key = None
     try:
         import streamlit as st
-        return st.secrets.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
+        key = st.secrets.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
     except Exception:
-        return os.environ.get("ANTHROPIC_API_KEY")
+        key = os.environ.get("ANTHROPIC_API_KEY")
+    return key.strip() if key else None
 
 MEAZURE_PORTFOLIO = """
 Meazure Learning offers the following products and services:
