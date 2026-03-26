@@ -92,7 +92,6 @@ if submitted:
     if not api_key:
         st.error("Anthropic API key not found. Add ANTHROPIC_API_KEY to your Streamlit secrets.")
         st.stop()
-    st.caption(f"🔑 Key loaded: `{api_key[:12]}...` (length: {len(api_key)})")
 
     status_placeholder = st.empty()
     with st.spinner(""):
