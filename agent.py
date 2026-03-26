@@ -6,6 +6,14 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+def _get_api_key():
+    """Read API key from st.secrets (Streamlit Cloud) or .env (local)."""
+    try:
+        import streamlit as st
+        return st.secrets.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_API_KEY")
+    except Exception:
+        return os.environ.get("ANTHROPIC_API_KEY")
+
 MEAZURE_PORTFOLIO = """
 Meazure Learning offers the following products and services:
 
@@ -107,7 +115,7 @@ def run_research(company_url: str, contact_name: str = None, linkedin_url: str =
     Returns:
         (result_dict, usage_dict) where usage_dict contains token counts and estimated cost.
     """
-    client = Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
+    client = Anthropic(api_key=_get_api_key())
 
     # Build the user message
     user_parts = [f"Company Website URL: {company_url}"]
